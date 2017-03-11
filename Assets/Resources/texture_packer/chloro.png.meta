@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: 7ea92542673336b498beefdb515ce91d
+timeCreated: 1486287465
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: arrow_in
+    21300002: Asset_pause icon
+    21300004: IcoChloro
+    21300006: IcoChloroBW
+    21300008: IcoCO2
+    21300010: IcoH2O
+    21300012: IcoHalfSun
+    21300014: IcoO2
+    21300016: IcoSugar
+    21300018: IcoSun
+    21300020: IcoWeather_cloudy
+    21300022: IcoWeather_sunny
+    21300024: process_to
+    21300026: Stopwatch
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: arrow_in
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 342
+        width: 95
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Asset_pause icon
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 181
+        width: 54
+        height: 53
+      alignment: 9
+      pivot: {x: 0.5, y: 0.49056605}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoChloro
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 377
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoChloroBW
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 377
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoCO2
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 248
+        width: 62
+        height: 62
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.48387095}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoH2O
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 179
+        width: 57
+        height: 64
+      alignment: 9
+      pivot: {x: 0.49122807, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoHalfSun
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 447
+        width: 34
+        height: 64
+      alignment: 9
+      pivot: {x: 0.9411765, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoO2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 302
+        width: 62
+        height: 38
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.4473684}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoSugar
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 236
+        width: 59
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5084746, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoSun
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 311
+        width: 62
+        height: 64
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoWeather_cloudy
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 312
+        width: 62
+        height: 63
+      alignment: 9
+      pivot: {x: 0.48387095, y: 0.50793654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: IcoWeather_sunny
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 182
+        width: 59
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5084746, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: process_to
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 443
+        width: 216
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Stopwatch
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 245
+        width: 60
+        height: 64
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
