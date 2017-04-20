@@ -374,11 +374,9 @@ public partial class tile_C : MonoBehaviour {
             board.total_number_of_gems_destroyed_by_the_player[gem_idx]++;
             board.number_of_gems_collect_by_the_player[gem_idx]++;
 
-            ResourceType resType = (ResourceType)gem_idx;
-            float value = (resType == ResourceType.CHLORO || 
-                ( resType == ResourceType.SUN && board.gameController.weather != WeatherType.SUNNY) ) ? 
-                    1.0f : 2.0f;
-            board.gameController.AddResource(resType, value);
+            ElementType eleType = (ElementType)gem_idx;
+
+            board.gameController.AddElement(eleType);
             //board.number_of_gems_collect_by_the_player_in_frame[board.board_array_master[_x, _y, 1]]++;
 
 

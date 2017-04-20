@@ -111,22 +111,6 @@ public partial class Board_C : MonoBehaviour {
 
     public void Start_update_board()//call from: tile_C.update.If_all_explosion_are_completed(), tile_C.update.Check_if_gem_movements_are_all_done()
     {
-            if (needTochangeWeatherIcons)
-            {
-                for (int i = 0; i < _X_tiles; ++i)
-                {
-                    for (int j = 0; j < _Y_tiles; ++j)
-                    {
-                        if (board_array_master[i, j, 1] == 2)
-                        {
-                            tiles_array[i, j].my_gem_renderer.sprite = gem_colors[2];
-                        }
-                    }
-                }
-
-                needTochangeWeatherIcons = false;
-            }
-
         //Debug.Log ("Start_update_board ");
 
         //if (!player_can_move_when_gem_falling)

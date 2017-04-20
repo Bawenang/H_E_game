@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using LoLSDK;
 
@@ -40,7 +41,7 @@ public class TestController : MonoBehaviour {
     void Start() {
         stageDisplay.Show(4, "PlaySequenceWithSfx", dialogCtrl.gameObject, 0);
 
-        LOLSubmitProgressWithCurrentScore(11);
+        LOLSubmitProgressWithCurrentScore(8);
 
         RefreshQuestion();
 
@@ -112,7 +113,7 @@ public class TestController : MonoBehaviour {
 #if UNITY_WEBGL
         if (LoLController.Exists() && LoLController.instance.isUsingLoL)
         {
-            LOLSubmitProgressWithCurrentScore(12);
+            LOLSubmitProgressWithCurrentScore(9);
             LoLSDK.LOLSDK.Instance.CompleteGame();
         }
 #endif
@@ -205,6 +206,8 @@ public class TestController : MonoBehaviour {
     {
         yield return new WaitForSeconds(2.0f);
 
+        EventSystem.current.SetSelectedGameObject(null);
+
         for (int i = 0; i < alternativeButtons.Length; ++i)
         {
             alternativeButtons[i].interactable = true;
@@ -238,6 +241,6 @@ public class TestController : MonoBehaviour {
     public void LOLSubmitProgressWithCurrentScore(int progress)
     {
         if (LoLController.Exists() && LoLController.instance.isUsingLoL)
-            LoLSDK.LOLSDK.Instance.SubmitProgress(LoLController.instance.score, progress, 12);
+            LoLController.instance.LOLSubmitProgressWithCurrentScore(progress);
     }
 }

@@ -8,6 +8,7 @@ public class LoLController : MonoBehaviour
 {
 
     [SerializeField] private bool _isUsingLoL;
+    [SerializeField] private int _maxProgress;
     [SerializeField] private bool _isDisplayingPerformanceTool;
     [SerializeField] private string _sceneAfterInit = "mainmenu";
 
@@ -127,7 +128,8 @@ public class LoLController : MonoBehaviour
 
     public void OnDestroy()
     {
-        s_Instance = null;
+        if (s_Instance == this)
+            s_Instance = null;
     }
     //----------------------------------------------------------------
     // End Singleton code
@@ -175,7 +177,7 @@ public class LoLController : MonoBehaviour
 
     void Startup()
     {
-        LOLSDK.Init("com.zeroexperiencestudio.photosynthesiscrash");
+        LOLSDK.Init("com.zeroexperiencestudio.heultimatestruggle");
         LOLSDK.Instance.QuestionsReceived += new QuestionListReceivedHandler(this.QuestionsReceived);
 
         //LOLSDK.Instance.SubmitProgress(Score, Level, MaxLevel);
@@ -197,5 +199,11 @@ public class LoLController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void LOLSubmitProgressWithCurrentScore(int progress)
+    {
+        if (LoLController.Exists() && LoLController.instance.isUsingLoL)
+            LoLSDK.LOLSDK.Instance.SubmitProgress(LoLController.instance.score, progress, _maxProgress);
     }
 }

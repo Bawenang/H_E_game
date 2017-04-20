@@ -17,7 +17,7 @@ public partial class Board_C : MonoBehaviour {
         if (player_win)
             Show_win_screen();
 		else
-            Show_lose_screen();
+            Show_lose_screen(isTimeLose);
     }
 
     public void Player_win()
@@ -40,11 +40,12 @@ public partial class Board_C : MonoBehaviour {
         }
     }
 
-    public void Player_lose()
+    public void Player_lose(bool isTime)
     {
         if (!game_end)
         {
             game_end = true;
+            isTimeLose = isTime;
             if (player_can_move)
             {
                 player_can_move = false;
@@ -148,7 +149,7 @@ public partial class Board_C : MonoBehaviour {
 
     }
 
-    void Show_lose_screen()
+    void Show_lose_screen(bool isTime)
     {
         if (Stage_uGUI_obj)//use menu kit win screen
         {
@@ -159,7 +160,10 @@ public partial class Board_C : MonoBehaviour {
         else //use default win screen
         {
             //gui_lose_screen.SetActive(true);
-            gameController.dialogCtrl.PlaySequence((int)DialogType.LOSE, false);
+            if (isTime)
+                gameController.dialogCtrl.PlaySequence((int)DialogType.LOSE_TIME, false);
+            else
+                gameController.dialogCtrl.PlaySequence((int)DialogType.LOSE_EARTH, false);
             //Debug.LogWarning("show lose screen!");
             if (AudioController.Exists())
                 AudioController.instance.StopBGM();

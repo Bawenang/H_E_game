@@ -34,21 +34,7 @@ public partial class Board_C : MonoBehaviour
                 return;
             }
 
-            if (needTochangeWeatherIcons)
-            {
-                for (int i = 0; i < _X_tiles; ++i)
-                {
-                    for (int j = 0; j < _Y_tiles; ++j)
-                    {
-                        if (board_array_master[i, j, 1] == 2)
-                        {
-                            tiles_array[i, j].my_gem_renderer.sprite = gem_colors[2];
-                        }
-                    }
-                }
-
-                needTochangeWeatherIcons = false;
-            }
+ 
 
             //player input
             if (current_moveStatus == moveStatus.switchingGems)

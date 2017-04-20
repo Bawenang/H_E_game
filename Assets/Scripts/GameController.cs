@@ -3,46 +3,32 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
-public enum ResourceType
-{
-    CO2,
-    H2O,
-    SUN,
-    CHLORO
-}
 
 public class GameController : MonoBehaviour {
 
     public delegate void GameTickCallback(float timer, float timeLeft, float timeIncrement);
     public static event GameTickCallback OnGameTick;
 
-    public delegate void SugarAdded(int value);
-    public static event SugarAdded OnSugarAdded;
+    public delegate void ElementGained(ElementType eleType);
+    public static event ElementGained OnElementGained;
+
+    public delegate void ElementCompleted(ElementType eleType);
+    public static event ElementCompleted OnElementCompleted;
 
     static readonly Color sunnyColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     static readonly Color cloudyColor = new Color(0.0f, 0.0f, 0.0f, 0.25f);
 
     public Board_C boardController;
     public DialogController dialogCtrl;
-    public Chlorophyll[] chloroList;
+    public ElementController eleController;
+    public GlobalEventController globalEventController;
+    public Goals goals;
     public StageDisplay stageDisplay;
     public int currentStage = 1;
-    public int activeChloro;
-    public int availableChloro;
 
-    public Text sugarText;
-
-    public int sugar;
-    public int targetSugar;
-
-    public WeatherType weather = WeatherType.SUNNY;
-    //public Image weatherImg;
-    public Image weatherIcon;
-    public Sprite[] weatherSprites;
-    public Sprite weatherGemFull;
-    public Sprite weatherGemHalf;
 
     public Image pauseIcon;
+    public Image unpauseIcon;
     private bool _pause = false;
 
     [SerializeField] private Toggle _musicToggle;
@@ -50,6 +36,8 @@ public class GameController : MonoBehaviour {
 
     [SerializeField] private string _bgmStr;
     [SerializeField] private AudioClip _bgmClip;
+
+    
 
     public bool pause
     {
@@ -61,8 +49,8 @@ public class GameController : MonoBehaviour {
         set
         {
             _pause = value;
-            weatherIcon.gameObject.SetActive(!_pause);
             pauseIcon.gameObject.SetActive(_pause);
+            unpauseIcon.gameObject.SetActive(!_pause);
         }
     }
 
@@ -117,29 +105,16 @@ public class GameController : MonoBehaviour {
         boardController.gameController = this;
         dialogCtrl.gameCtrl = this;
 
-        WeatherController.OnWeatherChange += OnWeatherChange;
         AudioController.OnSoundChanged += OnSoundChanged;
 
-
-
-        SetWeather(weather);
 
         SetAudios();
 
 
-        for (int i = 0; i < chloroList.Length; ++i)
-        {
-            chloroList[i].gameController = this;
-            chloroList[i].gameObject.SetActive(i < activeChloro);
-            chloroList[i].isAvailable = i < availableChloro;
-        }
 
-        sugar = 0;
-        if (targetSugar == 0)
-            targetSugar = 1;
+        eleController.gameController = this;
+        globalEventController.gameController = this;
 
-        string targetSugarStr = targetSugar > 0 ? targetSugar.ToString() : "999";
-        sugarText.text = sugar.ToString() + " / " + targetSugarStr;
 	}
 
     void Start()
@@ -160,35 +135,53 @@ public class GameController : MonoBehaviour {
             switch (currentStage)
             {
                 case 1:
-                    LOLSubmitProgressWithCurrentScore(0);
+                    LOLSubmitProgressWithCurrentScore(1);
                     break;
                 case 2:
                     LOLSubmitProgressWithCurrentScore(4);
                     break;
                 case 3:
-                    LOLSubmitProgressWithCurrentScore(9);
+                    LOLSubmitProgressWithCurrentScore(6);
                     break;
             }
         }
 #endif
     }
-	
-	// Update is called once per frame
-	void Update() {
-        if (boardController.player_turn && targetSugar > 0 && (sugar >= targetSugar))
+
+    // Update is called once per frame
+    void Update() {
+        if (boardController.player_turn && !dialogCtrl.isShown && goals.Get(GoalType.HUMANITY) >= goals.maxHumanity )
         {
             boardController.Player_win();
             boardController.Game_end();
+        }
+        else if (boardController.player_turn && !dialogCtrl.isShown && goals.Get(GoalType.EARTH) <= 0)
+        {
+            boardController.Player_lose(false);
         }
 
     }
 
     void OnDestroy()
     {
-        WeatherController.OnWeatherChange -= OnWeatherChange;
         AudioController.OnSoundChanged -= OnSoundChanged;
-
-
+#if UNITY_WEBGL
+        if (LoLController.Exists() && LoLController.instance.isUsingLoL)
+        {
+            switch (currentStage)
+            {
+                case 1:
+                    LOLSubmitProgressWithCurrentScore(3);
+                    break;
+                case 2:
+                    LOLSubmitProgressWithCurrentScore(5);
+                    break;
+                case 3:
+                    LOLSubmitProgressWithCurrentScore(7);
+                    break;
+            }
+        }
+#endif
     }
 
     public void DoGameTick(float deltaTime)
@@ -206,80 +199,9 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void AddSugar(int value)
+    public void AddElement(ElementType eleType)
     {
-        sugar += value;
-        string sugarStr = targetSugar > 0 ? Mathf.Min(sugar, targetSugar).ToString() : sugar.ToString();
-        string targetSugarStr = targetSugar > 0 ? targetSugar.ToString() : "999";
-        sugarText.text = sugarStr + " / " + targetSugarStr;
-
-        for (int i = 0; i < chloroList.Length; ++i)
-        {
-            if (!chloroList[i].isAvailable)
-            {
-                chloroList[i].UpdateChloro();
-            }
-        }
-
-        if (OnSugarAdded != null)
-            OnSugarAdded(value);
-    }
-
-    public void AddResource(ResourceType resType, float value)
-    {
-        float increment = value;
-        for (int i = 0; i < chloroList.Length; ++i)
-        {
-            if (resType == ResourceType.CHLORO || chloroList[i].isAvailable )
-            {
-                increment = chloroList[i].AddResource(resType, increment);
-
-                if (increment == 0)
-                    break;
-            }
-        }
-    }
-
-    public void SetWeather(WeatherType weaType)
-    {
-
-        weather = weaType;
-
-
-        if (weaType == WeatherType.SUNNY)
-        {
-            //weatherImg.color = sunnyColor;
-
-            boardController.gem_colors[2] = weatherGemFull;
-        }
-        else
-        {
-            //weatherImg.color = cloudyColor;
-
-            boardController.gem_colors[2] = weatherGemHalf;
-        }
-
-        for (int i = 0; i < boardController._X_tiles; ++i)
-        {
-            for (int j = 0; j < boardController._Y_tiles; ++j)
-            {
-                if (weather == WeatherType.SUNNY && boardController.tile_sprites_array[i, j].sprite == weatherGemHalf)
-                {
-                    boardController.tile_sprites_array[i, j].sprite = weatherGemFull;
-                }
-                else if(boardController.tile_sprites_array[i, j].sprite == weatherGemFull)
-                {
-                    boardController.tile_sprites_array[i, j].sprite = weatherGemHalf;
-                }
-            }
-        }
-
-        weatherIcon.sprite = weatherSprites[(int)weaType];
-    }
-
-    public void OnWeatherChange(WeatherType weaType)
-    {
-        SetWeather(weaType);
+        eleController.AddElement(eleType);
     }
 
     public void StartGame()
@@ -349,6 +271,19 @@ public class GameController : MonoBehaviour {
     public void LOLSubmitProgressWithCurrentScore(int progress)
     {
         if (LoLController.Exists() && LoLController.instance.isUsingLoL)
-            LoLSDK.LOLSDK.Instance.SubmitProgress(LoLController.instance.score, progress, 12);
+            LoLController.instance.LOLSubmitProgressWithCurrentScore(progress);
+    }
+
+    public void OnElementCompletedImpl(ElementType eleType)
+    {
+        if (OnElementCompleted != null)
+        {
+            OnElementCompleted(eleType);
+        }
+    }
+
+    public void SetElementCompleteEvents()
+    {
+        eleController.SetElementCompleteEvents();
     }
 }

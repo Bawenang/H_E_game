@@ -114,6 +114,10 @@ internal class match_controller : Editor
             GUI.color = Color.white;
         my_target.file_txt_asset = EditorGUILayout.ObjectField("Stage file", my_target.file_txt_asset, typeof(TextAsset), true) as TextAsset;
         my_target.pivot_board = EditorGUILayout.ObjectField("Pivot", my_target.pivot_board, typeof(Transform), true) as Transform;
+
+        my_target.tile_obj = EditorGUILayout.ObjectField("Tile prefab", my_target.tile_obj, typeof(GameObject), true) as GameObject;
+        my_target.tile_content = EditorGUILayout.ObjectField("Tile prefab", my_target.tile_content, typeof(GameObject), true) as GameObject;
+
         GUI.color = Color.white;
 
         my_target.start_after_selected = (Board_C.start_after)EditorGUILayout.EnumPopup("Start condition", my_target.start_after_selected);
@@ -390,6 +394,47 @@ internal class match_controller : Editor
                 EditorGUI.indentLevel--;
                 }
 
+            my_target.show_score = EditorGUILayout.Foldout(my_target.show_score, "Score rewards");
+            if (my_target.show_score)
+            {
+                EditorGUI.indentLevel++;
+
+                if (my_target.score_reward_for_damaging_tiles < 0)
+                    GUI.color = Color.red;
+                else
+                    GUI.color = Color.white;
+                my_target.score_reward_for_damaging_tiles = EditorGUILayout.IntField("damaging a tile", my_target.score_reward_for_damaging_tiles);
+                GUI.color = Color.white;
+
+                EditorGUILayout.Space();
+                for (int i = 0; i < my_target.gem_length; i++)
+                {
+                    if (my_target.score_reward_for_explode_gems == null || my_target.score_reward_for_explode_gems.Length != my_target.gem_length)
+                        my_target.score_reward_for_explode_gems = new int[my_target.gem_length];
+
+                    if (my_target.score_reward_for_explode_gems[i] < 0)
+                        GUI.color = Color.red;
+                    else
+                        GUI.color = Color.white;
+                    my_target.score_reward_for_explode_gems[i] = EditorGUILayout.IntField("explode " + (3 + i) + " gems with a move", my_target.score_reward_for_explode_gems[i]);
+                }
+                GUI.color = Color.white;
+
+                EditorGUILayout.Space();
+
+                if (my_target.score_reward_for_each_explode_gems_in_secondary_explosion < 0)
+                    GUI.color = Color.red;
+                else
+                    GUI.color = Color.white;
+                my_target.score_reward_for_each_explode_gems_in_secondary_explosion = EditorGUILayout.IntField("for each exploded gems in secondary explosion", my_target.score_reward_for_each_explode_gems_in_secondary_explosion);
+                GUI.color = Color.white;
+
+                EditorGUILayout.Space();
+
+                EditorGUI.indentLevel--;
+                EditorGUILayout.Space();
+            }
+
             if (my_target.win_requirement_selected == Board_C.win_requirement.destroy_all_gems)
                 my_target.gem_emitter_rule = Board_C.gem_emitter.off;
 
@@ -598,11 +643,13 @@ internal class match_controller : Editor
         {
             EditorGUI.indentLevel++;
 
-
             my_target.show_s_gems = EditorGUILayout.Foldout(my_target.show_s_gems, "Gems");
             if (my_target.show_s_gems)
             {
                 EditorGUI.indentLevel++;
+                if (my_target.gem_colors == null || my_target.gem_colors.Length != my_target.gem_length)
+                    my_target.gem_colors = new Sprite[my_target.gem_length];
+
                 for (int i = 0; i < my_target.gem_length; i++)
                 {
                     if (!my_target.gem_colors[i])

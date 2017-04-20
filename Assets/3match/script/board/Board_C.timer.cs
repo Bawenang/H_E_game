@@ -32,7 +32,7 @@ public partial class Board_C : MonoBehaviour{
             if (time_left <= 0)
             {
                 time_left = 0;
-                Player_lose();
+                Player_lose(true);
             }
             else if (time_left > timer)
                 time_left = timer;

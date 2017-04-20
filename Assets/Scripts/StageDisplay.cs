@@ -8,6 +8,7 @@ public class StageDisplay : MonoBehaviour {
     private const float c_idleTime = 1.0f;
 
     [SerializeField] private Text _stageText;
+    [SerializeField] private string _stageName;
 
     public Canvas displayCanvas;
 
@@ -63,7 +64,7 @@ public class StageDisplay : MonoBehaviour {
         gameObject.SetActive(true);
         displayCanvas.gameObject.SetActive(true);
         if (stage < 4)
-            _stageText.text = "Stage " + stage.ToString();
+            _stageText.text = "Stage " + stage.ToString() + "\n" + _stageName;
         else
             _stageText.text = "Final Test Stage";
         //_stageText.color = new Color(_stageText.color.r, _stageText.color.g, _stageText.color.b, 0.0f);

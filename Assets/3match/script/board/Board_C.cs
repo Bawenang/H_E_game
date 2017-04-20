@@ -20,8 +20,6 @@ public partial class Board_C : MonoBehaviour {
 
 	public bool player_can_move_when_gem_falling;
 
-    public bool needTochangeWeatherIcons = false;
-
     public enum start_after
 	{
 		time,
@@ -163,9 +161,10 @@ public partial class Board_C : MonoBehaviour {
 
 	public Transform cursor;
 	public bool player_win;
+    public bool isTimeLose;
 
-	#region rules
-	public enum win_requirement
+    #region rules
+    public enum win_requirement
 	{
 		destroy_all_tiles,
 		enemy_hp_is_zero,

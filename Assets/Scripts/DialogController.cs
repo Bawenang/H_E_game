@@ -7,8 +7,10 @@ public enum DialogType
     STARTING,
     PAUSE,
     WIN,
-    LOSE,
-    REVIEW
+    LOSE_TIME,
+    LOSE_EARTH,
+    REVIEW,
+    EVENT
 }
 
 public class DialogController : MonoBehaviour {
@@ -16,6 +18,8 @@ public class DialogController : MonoBehaviour {
     [SerializeField] private DialogSequence[] _sequences;
 
     [SerializeField] private Canvas _dialogCanvas;
+
+    [SerializeField] private Button[] _lowerLevelButtons;
 
     public GameController gameCtrl;
     public MainmenuController mainMenuCtrl;
@@ -38,6 +42,14 @@ public class DialogController : MonoBehaviour {
         }
     }
 
+    public bool isShown
+    {
+        get
+        {
+            return _dialogCanvas.gameObject.activeSelf;
+        }
+    }
+
     // Use this for initialization
     void Awake () {
         DialogSequence.controller = this;
@@ -48,6 +60,11 @@ public class DialogController : MonoBehaviour {
     {
         _dialogCanvas.gameObject.SetActive(true);
         _sequences[_currentSequence].StartSequence();
+
+        for (int i = 0; i < _lowerLevelButtons.Length; ++i)
+        {
+            _lowerLevelButtons[i].interactable = false;
+        }
 
         if (playSfx)
         {
@@ -87,6 +104,11 @@ public class DialogController : MonoBehaviour {
             gameCtrl.pause = false;
 
         _dialogCanvas.gameObject.SetActive(false);
+
+        for (int i = 0; i < _lowerLevelButtons.Length; ++i)
+        {
+            _lowerLevelButtons[i].interactable = true;
+        }
     }
 
     public void HideDarkBG()

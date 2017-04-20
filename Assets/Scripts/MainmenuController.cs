@@ -69,7 +69,10 @@ public class MainmenuController : MonoBehaviour {
 #endif
 
         if (LoLController.Exists() && LoLController.instance.isUsingLoL)
+        {
+            LoLController.instance.LOLSubmitProgressWithCurrentScore(0);
             LoLController.instance.score = 0;
+        }
     }
 	
 

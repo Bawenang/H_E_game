@@ -135,16 +135,5 @@ public partial class Board_C : MonoBehaviour
 
     void Check_win_score_condition()
     {
-        if (win_requirement_selected == win_requirement.reach_target_score)
-        {
-            if (player_turn && (player_score >= target_score))
-                Player_win();
-        }
-
-        if (lose_requirement_selected == lose_requirement.enemy_reach_target_score)
-        {
-            if (!player_turn && (enemy_score >= target_score))
-                Player_lose();
-        }
     }
 }
