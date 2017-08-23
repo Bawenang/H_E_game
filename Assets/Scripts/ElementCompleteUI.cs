@@ -34,7 +34,7 @@ public class ElementCompleteUI : MonoBehaviour {
         {
 
 #if UNITY_WEBGL
-                if (LoLController.Exists() && LoLController.instance.isUsingLoL)
+            if (LoLController.Exists() && LoLController.instance.isUsingLoL)
                     gameCtrl.LOLSubmitProgressWithCurrentScore(2);
 #endif
             if (!gameCtrl.dialogCtrl.isShown)
